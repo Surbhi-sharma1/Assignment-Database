@@ -1,0 +1,54 @@
+
+body{
+    margin-top: 5rem;
+    text-align: center;
+    background-color: rgba(57, 236, 171, 0.144);
+}
+
+.btn
+{
+    background-color: rgb(245, 123, 188);
+    font-size: 1rem;
+    border-radius: 0.1rem;
+    padding: 0.2rem;
+    display: inline-flex;
+}
+.create-btn
+{
+    background-color: rgb(245, 123, 188);
+    font-size: 1rem;
+    border-radius: 0.1rem;
+    margin-top: 0.1rem;
+    padding: 0.1rem;   
+    display: inline-flex;
+}
+.btn:hover,.edit:hover,.dlt:hover,.create-btn:hover,.submit:hover{
+    background-color: rgb(231, 103, 103);
+    color: white;
+}
+
+table{
+    border-collapse: collapse;
+    margin: 1rem auto;
+}
+
+.select{
+    border: 1px solid black;
+    font-size: 1rem;
+
+}
+
+table,td{
+    border: 2px solid black;
+    padding: 1rem;
+    font-size: 1rem;
+}
+
+.edit, .dlt,.submit{
+    font-size: 1rem;
+    border-radius: 0.1rem;
+    padding: 0.1rem;
+    margin: auto 0.1rem;
+    background-color: hotpink;
+    display: inline-block;
+}
