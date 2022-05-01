@@ -9,6 +9,7 @@ route.post('/add', userController.createUser);
 route.put('/update/:id', userController.updateUser);
 route.delete('/delete/:id', userController.deleteUser);
 route.get('/customer', customer.getCustomer);
+route.get('/customerList', customer.getCustomerList);
 route.get('/customers/:name', customer.getCustomerById);
 route.get('/roles', roleController.getRoles);
 route.get('/roles/:name', roleController.getRoleKeyByName);

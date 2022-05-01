@@ -22,12 +22,13 @@ class controller {
 
     public async getUserById(req: Request, res: Response) {
         const id = Number(req.params.id);
-        pool.query('SELECT * FROM pusers WHERE id = $1', [id], (error, result) => {
+        pool.query('select pusers.customerid,id,firstname,middlename,lastname,email,phone,roleuser.name as role,customer.name as customer,pusers.address from pusers left join customer on pusers.customerid=customer.customerid left join roleuser on pusers.role=roleuser.name WHERE id = $1', [id], (error, result) => {
             if (error) {
                 res.status(404).send("You have entered wrong id");
             }
             else {
                 res.status(200).json(result.rows);
+                console.log(result.rows);
             }
         }
         );
@@ -48,10 +49,10 @@ class controller {
     }
     public async updateUser(req: Request, res: Response) {
 
-        const id = Number(req.params.id);
-        const { firstname, middlename, lastname, email, phone, role, customername, address } = req.body;
-        pool.query('UPDATE pusers SET firstname = $1, middlename = $2, lastname = $3, email = $4, phone = $5, role = $6,customername=$7, address = $8 WHERE id = $9',
-            [firstname, middlename, lastname, email, phone, role, customername, address, id], (err, result) => {
+        const idV = Number(req.params.id);
+        const { customerid, firstname, middlename, lastname, email, phone, role, customername, address, id } = req.body;
+        pool.query('UPDATE pusers SET customerid=$1,firstname = $2, middlename = $3, lastname = $4, email = $5, phone = $6, role = $7,customername=$8, address = $9 WHERE id = $10',
+            [customerid, firstname, middlename, lastname, email, phone, role, customername, address, id], (err, result) => {
                 if (err) {
                     res.status(400).send("Failed due to bad input");
                     throw err;

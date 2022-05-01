@@ -24,6 +24,17 @@ class customerController {
             }
         })
     }
+    public async getCustomerList(req: Request, res: Response) {
+        pool.query('SELECT * FROM customer', (error: any, result: any) => {
+            if (error) {
+                throw error;
+            }
+            else {
+                res.status(200).json(result.rows);
+            }
+        }
+        );
+    }
 
 }
 

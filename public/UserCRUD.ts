@@ -5,7 +5,7 @@ import { myURL } from "app.js";
 import { selectValue } from "./select.js";
 import { cursorTo } from "readline";
 import { userController } from "src/controller.js";
-import { type } from "os";
+
 export class UserCRUD implements CRUD<User>
 {
     users: User[];
@@ -226,9 +226,9 @@ export class UserCRUD implements CRUD<User>
         user.phone = phoneCell.textContent!;
         user.address = addressCell.textContent!;
         for (let i = 0; i <= 2; i++) {
-            let s = tr.children[5].children[i] as HTMLOptionElement;
-
+            let s = tr.children[5].children[0].children[i] as HTMLOptionElement;
             if (s.selected) {
+
                 user.role = s.textContent!;
             }
         }
@@ -237,32 +237,34 @@ export class UserCRUD implements CRUD<User>
         tr.children[5].replaceWith(td);
         let roleCell = tr.cells.namedItem('role-cell');
         roleCell.innerHTML = user.role;
-
-        const customerList = await getCustomer(this.myURL);
-        for (let i = 0; i <= customerList.length; i++) {
-            let c = tr.children[6].children[i] as HTMLOptionElement
-            if (c.selected) {
-                user.customer = c.textContent;
+        const data1 = await getRoleKey(this.myURL, user.role);
+        console.log(data1);
+        for (let i = 0; i <= 2; i++) {
+            let optionValue = tr.children[6].children[0].children[i] as HTMLOptionElement;
+            if (optionValue.selected) {
+                user.customer = optionValue.textContent;
             }
             let td1 = document.createElement('td1');
             td1.setAttribute('id', 'customer');
             tr.children[6].append(td1);
-            let customerCell = tr.cells.namedItem('customer');
-            customerCell.innerHTML = user.role;
-
+            let customerCell = tr.children[6];
+            customerCell.innerHTML = user.customer;
+            const dataC = await getCustomerIdByName(this.myURL, user.customer);
+            console.log(dataC);
         }
 
         const mybody = {
-            // "id": user.id,
+            "id": user.id,
             "firstname": user.firstname,
             "middlename": user.middlename,
             "lastname": user.lastname,
             "email": user.email,
             "phone": user.phone,
-            "role": user.role,
+            "role": data1[0].key,
             "customername": user.customer,
             "address": user.address
         };
+
         const response = await fetch(updateURL, {
             method: 'PUT',
             body: JSON.stringify(mybody), // string or object

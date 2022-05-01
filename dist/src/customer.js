@@ -34,6 +34,18 @@ class customerController {
             });
         });
     }
+    getCustomerList(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            pool.query('SELECT * FROM customer', (error, result) => {
+                if (error) {
+                    throw error;
+                }
+                else {
+                    res.status(200).json(result.rows);
+                }
+            });
+        });
+    }
 }
 export const customer = new customerController();
 //# sourceMappingURL=customer.js.map

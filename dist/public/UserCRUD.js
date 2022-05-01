@@ -209,7 +209,7 @@ export class UserCRUD {
             user.phone = phoneCell.textContent;
             user.address = addressCell.textContent;
             for (let i = 0; i <= 2; i++) {
-                let s = tr.children[5].children[i];
+                let s = tr.children[5].children[0].children[i];
                 if (s.selected) {
                     user.role = s.textContent;
                 }
@@ -219,26 +219,29 @@ export class UserCRUD {
             tr.children[5].replaceWith(td);
             let roleCell = tr.cells.namedItem('role-cell');
             roleCell.innerHTML = user.role;
-            const customerList = yield getCustomer(this.myURL);
-            for (let i = 0; i <= customerList.length; i++) {
-                let c = tr.children[6].children[i];
-                if (c.selected) {
-                    user.customer = c.textContent;
+            const data1 = yield getRoleKey(this.myURL, user.role);
+            console.log(data1);
+            for (let i = 0; i <= 2; i++) {
+                let optionValue = tr.children[6].children[0].children[i];
+                if (optionValue.selected) {
+                    user.customer = optionValue.textContent;
                 }
                 let td1 = document.createElement('td1');
                 td1.setAttribute('id', 'customer');
                 tr.children[6].append(td1);
-                let customerCell = tr.cells.namedItem('customer');
-                customerCell.innerHTML = user.role;
+                let customerCell = tr.children[6];
+                customerCell.innerHTML = user.customer;
+                const dataC = yield getCustomerIdByName(this.myURL, user.customer);
+                console.log(dataC);
             }
             const mybody = {
-                // "id": user.id,
+                "id": user.id,
                 "firstname": user.firstname,
                 "middlename": user.middlename,
                 "lastname": user.lastname,
                 "email": user.email,
                 "phone": user.phone,
-                "role": user.role,
+                "role": data1[0].key,
                 "customername": user.customer,
                 "address": user.address
             };
