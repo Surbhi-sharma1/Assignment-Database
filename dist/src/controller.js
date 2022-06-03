@@ -43,6 +43,7 @@ class controller {
                     throw err;
                 }
                 else {
+                    res.json(result.rows);
                     res.status(200).send("User added successfully");
                 }
             });
@@ -58,6 +59,7 @@ class controller {
                     throw err;
                 }
                 else {
+                    res.json(result.rows);
                     res.status(200).send("Updated");
                 }
             });
